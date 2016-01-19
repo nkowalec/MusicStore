@@ -204,6 +204,14 @@
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\Module\Album.cs" />
+    <Compile Include="Models\Module\Artysta.cs" />
+    <Compile Include="Models\Module\Currency.cs" />
+    <Compile Include="Models\Module\DBItemAttribute.cs" />
+    <Compile Include="Models\Module\DbModule.cs" />
+    <Compile Include="Models\Module\DBTableAttribute.cs" />
+    <Compile Include="Models\Module\RowState.cs" />
+    <Compile Include="Models\Module\Utwor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
