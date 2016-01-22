@@ -1,11 +1,8 @@
 ﻿namespace MusicStore.Models.Module
 {
     [DBTable]
-    public class Utwor
+    public class Utwor : Row
     {
-        [DBItem]
-        public int Id { get; set; }
-        public RowState State { get; set; } = RowState.Unchanged;
         [DBItem]
         public int AlbumId { get; set; }
         public Album Album { get; set; }
@@ -27,5 +24,8 @@
             State = RowState.Added;
             Id = 0;
         }
+        private Utwor() { }
+
+        public static Utwor Empty = new Utwor();
     }
 }

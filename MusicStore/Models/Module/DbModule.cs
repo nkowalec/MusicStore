@@ -1,28 +1,271 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.SqlClient;
+using System.IO;
 using System.Linq;
+using System.Reflection;
+using System.Security.Policy;
 using System.Web;
 
 namespace MusicStore.Models.Module
 {
-    public class DbModule
+    public class DbModule : IDisposable
     {
+        IDbConnection Connection;
         private DbModule()
         {
-
+            var path = HttpContext.Current.Request.PhysicalApplicationPath;
+            Path.Combine(path, @"\App_Data\DataBase.mdf");
+            string connString = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=" + path + @";Integrated Security=True";
+            Connection = new SqlConnection(connString);
         }
 
         private static DbModule instance = new DbModule();
         public static DbModule GetInstance() => instance;
 
-        private DataTable utwory = new DataTable();
-
-        public DataTable Utwory
+        public List<Utwor> Utwory
         {
-            get { return utwory; }
+            get
+            {
+                List<Utwor> utwory = new List<Utwor>();
+
+                try
+                {
+                    Connection.Open();
+                    SqlCommand command = new SqlCommand("SELECT * FROM Utwor", (SqlConnection)Connection);
+
+                    var reader = command.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        Utwor utwor = Utwor.Empty;
+                        utwor.State = RowState.Unchanged;
+                        foreach (PropertyInfo prop in typeof(Utwor).GetProperties().Where(x => x.GetCustomAttribute(typeof(DBItemAttribute)) != null))
+                        {
+                            prop.SetValue(utwor, reader[prop.Name]);
+                        }
+                        utwory.Add(utwor);
+                    }
+                }
+                catch (Exception ex)
+                {
+
+                }
+                finally
+                {
+                    Connection.Close();
+                }
+
+                return utwory;
+            }
         }
 
+        public List<Artysta> Artysci
+        {
+            get
+            {
+                List<Artysta> artists = new List<Artysta>();
+
+                try
+                {
+                    Connection.Open();
+                    SqlCommand command = new SqlCommand("SELECT * FROM Artysta", (SqlConnection)Connection);
+
+                    var reader = command.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        Artysta art = new Artysta();
+                        art.State = RowState.Unchanged;
+                        foreach (PropertyInfo prop in typeof(Artysta).GetProperties().Where(x => x.GetCustomAttribute(typeof(DBItemAttribute)) != null))
+                        {
+                            prop.SetValue(art, reader[prop.Name]);
+                        }
+                        artists.Add(art);
+                    }
+                }
+                catch (Exception ex)
+                {
+
+                }
+                finally
+                {
+                    Connection.Close();
+                }
+
+                return artists;
+            }
+        }
+
+        public List<Album> Albumy
+        {
+            get
+            {
+                List<Album> albums = new List<Album>();
+
+                try
+                {
+                    Connection.Open();
+                    SqlCommand command = new SqlCommand("SELECT * FROM Album", (SqlConnection)Connection);
+
+                    var reader = command.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        Album album = Album.Empty;
+                        album.State = RowState.Unchanged;
+                        foreach (PropertyInfo prop in typeof(Album).GetProperties().Where(x => x.GetCustomAttribute(typeof(DBItemAttribute)) != null))
+                        {
+                            prop.SetValue(album, reader[prop.Name]);
+                        }
+                        albums.Add(album);
+                    }
+                }
+                catch (Exception ex)
+                {
+
+                }
+                finally
+                {
+                    Connection.Close();
+                }
+
+                return albums;
+            }
+        }
+
+        public void Dispose()
+        {
+            Connection.Close();
+            Connection.Dispose();
+        }
+
+        public bool AddRow<T>(T obiekt) where T : class
+        {
+            bool result = true;
+            Type typ = typeof(T);
+            var attrib = typ.GetCustomAttributes(typeof(DBTableAttribute), true).Any();
+            if (!attrib) throw new InvalidOperationException("For this method you can use only classes with DBTable attribute");
+
+            try
+            {
+                Connection.Open();
+                string query = $"INSERT INTO {typ.Name} ";
+                string columns = "(";
+                string values = "(";
+                var dict = new Dictionary<string, object>();
+
+                foreach(PropertyInfo prop in typ.GetProperties().Where(x => x.GetCustomAttribute(typeof(DBItemAttribute)) != null))
+                {
+                    if (prop.Name != "Id")
+                    {
+                        columns += $"{prop.Name},";
+                        values += $"@{prop.Name},";
+                        dict.Add(prop.Name, prop.GetValue(obiekt));
+                    }
+                }
+                columns = columns.Remove(columns.Length - 1, 1) + ")";
+                values = values.Remove(values.Length - 1, 1) + ")";
+
+                query = query + columns + " VALUES " + values;
+
+                SqlCommand command = new SqlCommand(query, (SqlConnection)Connection);
+                foreach(var obj in dict)
+                {
+                    command.Parameters.AddWithValue(obj.Key, obj.Value);
+                }
+
+                command.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+                result = false;
+                return result;
+            }
+            finally
+            {
+                Connection.Close();
+            }
+
+            return result;
+        }
+
+        public bool Update<T>(T obiekt) where T : class
+        {
+            bool result = true;
+            Type typ = typeof(T);
+            var attrib = typ.GetCustomAttributes(typeof(DBTableAttribute), true).Any();
+            if (!attrib) throw new InvalidOperationException("For this method you can use only classes with DBTable attribute");
+
+            try
+            {
+                Connection.Open();
+                string query = $"UPDATE {typ.Name} ";
+                string values = "SET ";
+                int ID = 0;
+                var dict = new Dictionary<string, object>();
+
+                foreach (PropertyInfo prop in typ.GetProperties().Where(x => x.GetCustomAttribute(typeof(DBItemAttribute)) != null))
+                {
+                    if (prop.Name != "Id")
+                    {
+                        values += $"{prop.Name} = @{prop.Name},";
+                        dict.Add(prop.Name, prop.GetValue(obiekt));
+                    }
+                    else
+                    {
+                        ID = (int)prop.GetValue(obiekt);
+                    }
+                }
+                values = values.Remove(values.Length - 1, 1) + $" WHERE Id = {ID}";
+
+                query = query + values;
+
+                SqlCommand command = new SqlCommand(query, (SqlConnection)Connection);
+                foreach (var obj in dict)
+                {
+                    command.Parameters.AddWithValue(obj.Key, obj.Value);
+                }
+
+                command.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+                result = false;
+                return result;
+            }
+            finally
+            {
+                Connection.Close();
+            }
+
+            return result;
+        }
+
+        public bool Delete<T>(T obiekt) where T : class
+        {
+            bool result = true;
+            Type typ = typeof(T);
+            var attrib = typ.GetCustomAttributes(typeof(DBTableAttribute), true).Any();
+            if (!attrib) throw new InvalidOperationException("For this method you can use only classes with DBTable attribute");
+
+            try
+            {
+                Connection.Open();
+                string query = $"DELETE FROM {typ.Name} WHERE Id = {typ.GetProperty("Id").GetValue(obiekt)}";
+                SqlCommand command = new SqlCommand(query, (SqlConnection)Connection);
+                command.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+                result = false;
+                return result;
+            }
+            finally
+            {
+                Connection.Close();
+            }
+
+            return result;
+        }
     }
 
 }

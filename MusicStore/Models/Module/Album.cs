@@ -6,11 +6,8 @@ using System.Web;
 namespace MusicStore.Models.Module
 {
     [DBTable]
-    public class Album
+    public class Album : Row
     {
-        [DBItem]
-        public int Id { get; set; }
-        public RowState State { get; private set; } = RowState.Unchanged;
         [DBItem]
         public int ArtystaId { get; set; }
         [DBItem]
@@ -33,5 +30,8 @@ namespace MusicStore.Models.Module
             Artysta = artist;
             ArtystaId = artist.Id;
         }
+
+        private Album() { }
+        public static Album Empty = new Album();
     }
 }

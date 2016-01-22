@@ -210,6 +210,7 @@
     <Compile Include="Models\Module\DBItemAttribute.cs" />
     <Compile Include="Models\Module\DbModule.cs" />
     <Compile Include="Models\Module\DBTableAttribute.cs" />
+    <Compile Include="Models\Module\Row.cs" />
     <Compile Include="Models\Module\RowState.cs" />
     <Compile Include="Models\Module\Utwor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

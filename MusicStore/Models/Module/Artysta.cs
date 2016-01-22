@@ -3,11 +3,8 @@
 namespace MusicStore.Models.Module
 {
     [DBTable]
-    public class Artysta
+    public class Artysta : Row
     {
-        [DBItem]
-        public int Id { get; set; }
-        public RowState State { get; set; } = RowState.Unchanged;
         [DBItem]
         public string Nazwa { get; set; }
         [DBItem]
