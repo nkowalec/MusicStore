@@ -16,18 +16,40 @@ namespace MusicStore.Models.Module
         public Currency Brutto { get; set; }
         [DBItem]
         public byte[] Image { get; set; }
-        public Artysta Artysta { get; set; }
+        private Artysta artysta = null;
+        public Artysta Artysta
+        {
+            get
+            {
+                if (artysta == null) artysta = DbModule.GetInstance().Artysci.Where(x => x.Id == ArtystaId).First();
+                return artysta;
+            }
+        }
         [DBItem]
         public bool Blokada { get; set; }
-        public List<Utwor> Utwory { get; set; }
+        private List<Utwor> utwory = null;
+        public List<Utwor> Utwory
+        {
+            get
+            {
+                if(Id != 0)
+                {
+                    if (utwory == null) utwory = DbModule.GetInstance().Utwory.Where(x => x.AlbumId == Id).ToList();
+                }
+                else
+                {
+                    utwory = new List<Utwor>();
+                }
+                return utwory;
+            }
+        }
 
         public Album(Artysta artist)
         {
             Id = 0;
             State = RowState.Added;
             Blokada = false;
-            Utwory = new List<Utwor>();
-            Artysta = artist;
+            this.artysta = artist;
             ArtystaId = artist.Id;
         }
 

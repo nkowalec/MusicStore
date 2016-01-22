@@ -1,11 +1,21 @@
-﻿namespace MusicStore.Models.Module
+﻿using System.Linq;
+
+namespace MusicStore.Models.Module
 {
     [DBTable]
     public class Utwor : Row
     {
         [DBItem]
         public int AlbumId { get; set; }
-        public Album Album { get; set; }
+        private Album album = null;
+        public Album Album {
+            get
+            {
+                if (album == null) 
+                album = DbModule.GetInstance().Albumy.Where(x => x.Id == AlbumId).First();
+                return album;
+            }
+        }
         [DBItem]
         public string Tytul { get; set; }
         [DBItem]
@@ -19,7 +29,7 @@
 
         public Utwor(Album album)
         {
-            Album = album;
+            this.album = album;
             AlbumId = album.Id;
             State = RowState.Added;
             Id = 0;
