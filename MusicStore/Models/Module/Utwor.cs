@@ -6,7 +6,7 @@ namespace MusicStore.Models.Module
     public class Utwor : Row
     {
         [DBItem]
-        public int AlbumId { get; set; }
+        public int AlbumId { get; set; } = -1;
         private Album album = null;
         public Album Album {
             get
@@ -17,15 +17,15 @@ namespace MusicStore.Models.Module
             }
         }
         [DBItem]
-        public string Tytul { get; set; }
+        public string Tytul { get; set; } = "";
         [DBItem]
-        public string Wykonawca { get; set; }
+        public string Wykonawca { get; set; } = "";
         [DBItem]
-        public string Info { get; set; }
+        public string Info { get; set; } = "";
         [DBItem]
-        public string Tekst { get; set; }
+        public string Tekst { get; set; } = "";
         [DBItem]
-        public string YtLink { get; set; }
+        public string YtLink { get; set; } = "";
 
         public Utwor(Album album)
         {
@@ -34,8 +34,7 @@ namespace MusicStore.Models.Module
             State = RowState.Added;
             Id = 0;
         }
-        private Utwor() { }
+        public Utwor() { }
 
-        public static Utwor Empty = new Utwor();
     }
 }

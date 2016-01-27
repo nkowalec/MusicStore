@@ -1,0 +1,24 @@
+﻿@model List<MusicStore.Models.Module.Album>
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Albumy</h2>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Artysta:</th>
+            <th>Nazwa:</th>
+            <th>Cena:</th>
+        </tr>
+    </thead>
+    @foreach(var row in Model)
+    {
+        <tr>
+            <td>@Html.Label(row.Artysta.Nazwa)</td>
+            <td>@Html.Label(row.Nazwa)</td>
+            <td>@Html.Label(row.BruttoValue + " " + row.BruttoSymbol)</td>
+        </tr>
+    }
+</table>

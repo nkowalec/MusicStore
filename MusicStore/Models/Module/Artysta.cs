@@ -7,9 +7,9 @@ namespace MusicStore.Models.Module
     public class Artysta : Row
     {
         [DBItem]
-        public string Nazwa { get; set; }
+        public string Nazwa { get; set; } = "";
         [DBItem]
-        public string Opis { get; set; }
+        public string Opis { get; set; } = "";
 
         private List<Album> albumy = null;
         public List<Album> Albumy

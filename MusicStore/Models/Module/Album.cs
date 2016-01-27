@@ -9,11 +9,15 @@ namespace MusicStore.Models.Module
     public class Album : Row
     {
         [DBItem]
-        public int ArtystaId { get; set; }
+        public string Nazwa { get; set; } = "";
         [DBItem]
-        public decimal StanIlosc { get; set; }
+        public int ArtystaId { get; set; } = -1;
         [DBItem]
-        public Currency Brutto { get; set; }
+        public decimal StanIlosc { get; set; } = 0;
+        [DBItem]
+        public decimal BruttoValue { get; set; } = 0;
+        [DBItem]
+        public string BruttoSymbol { get; set; } = "";
         [DBItem]
         public byte[] Image { get; set; }
         private Artysta artysta = null;
@@ -53,7 +57,6 @@ namespace MusicStore.Models.Module
             ArtystaId = artist.Id;
         }
 
-        private Album() { }
-        public static Album Empty = new Album();
+        public Album() { }
     }
 }

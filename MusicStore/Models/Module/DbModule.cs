@@ -16,7 +16,7 @@ namespace MusicStore.Models.Module
         private DbModule()
         {
             var path = HttpContext.Current.Request.PhysicalApplicationPath;
-            Path.Combine(path, @"\App_Data\DataBase.mdf");
+            path = Path.Combine(path, @"App_Data\DataBase.mdf");
             string connString = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=" + path + @";Integrated Security=True";
             Connection = new SqlConnection(connString);
         }
@@ -38,7 +38,7 @@ namespace MusicStore.Models.Module
                     var reader = command.ExecuteReader();
                     while (reader.Read())
                     {
-                        Utwor utwor = Utwor.Empty;
+                        Utwor utwor = new Utwor();
                         utwor.State = RowState.Unchanged;
                         foreach (PropertyInfo prop in typeof(Utwor).GetProperties().Where(x => x.GetCustomAttribute(typeof(DBItemAttribute)) != null))
                         {
@@ -110,11 +110,12 @@ namespace MusicStore.Models.Module
                     var reader = command.ExecuteReader();
                     while (reader.Read())
                     {
-                        Album album = Album.Empty;
+                        Album album = new Album();
                         album.State = RowState.Unchanged;
                         foreach (PropertyInfo prop in typeof(Album).GetProperties().Where(x => x.GetCustomAttribute(typeof(DBItemAttribute)) != null))
                         {
-                            prop.SetValue(album, reader[prop.Name]);
+                            if (reader[prop.Name] != null && reader[prop.Name].GetType() != typeof(DBNull))
+                                prop.SetValue(album, reader[prop.Name]);
                         }
                         albums.Add(album);
                     }
