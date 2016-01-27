@@ -139,7 +139,7 @@ namespace MusicStore.Models.Module
             Connection.Dispose();
         }
 
-        public bool AddRow<T>(T obiekt) where T : class
+        public bool AddRow<T>(T obiekt) where T : Row
         {
             bool result = true;
             Type typ = typeof(T);
@@ -166,7 +166,7 @@ namespace MusicStore.Models.Module
                 columns = columns.Remove(columns.Length - 1, 1) + ")";
                 values = values.Remove(values.Length - 1, 1) + ")";
 
-                query = query + columns + " VALUES " + values;
+                query = query + columns + " VALUES " + values + " SELECT SCOPE_IDENTITY() AS ID";
 
                 SqlCommand command = new SqlCommand(query, (SqlConnection)Connection);
                 foreach(var obj in dict)
@@ -174,7 +174,8 @@ namespace MusicStore.Models.Module
                     command.Parameters.AddWithValue(obj.Key, obj.Value);
                 }
 
-                command.ExecuteNonQuery();
+                var reader = command.ExecuteReader();
+                obiekt.Id = (int)reader["ID"];
             }
             catch (Exception ex)
             {
