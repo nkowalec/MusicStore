@@ -32,5 +32,10 @@ namespace MusicStore.Models.Module
             State = RowState.Added;
             Id = 0;
         }
+
+        public override string ToString()
+        {
+            return this.Nazwa;
+        }
     }
 }

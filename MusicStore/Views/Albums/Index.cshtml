@@ -5,12 +5,15 @@
 
 <h2>Albumy</h2>
 
+<button onclick="location.href='@Url.Action("AddNew", "Albums")'" class="btn btn-lg btn-default">Dodaj Album</button>
+
 <table class="table table-striped">
     <thead>
         <tr>
             <th>Artysta:</th>
             <th>Nazwa:</th>
             <th>Cena:</th>
+            <th>Stan:</th>
         </tr>
     </thead>
     @foreach(var row in Model)
@@ -19,6 +22,10 @@
             <td>@Html.Label(row.Artysta.Nazwa)</td>
             <td>@Html.Label(row.Nazwa)</td>
             <td>@Html.Label(row.BruttoValue + " " + row.BruttoSymbol)</td>
+            <td>@Html.Label(row.StanIlosc.ToString())</td>
+            <td>
+            <button onclick="location.href='@Url.Action("Edit", "Albums", new { Id = row.Id })'" class="btn btn-default">Edytuj</button>
+            <button onclick="location.href='@Url.Action("Delete", "Albums", row.Id)'" class="btn btn-danger">Usuń</button></td>
         </tr>
     }
 </table>

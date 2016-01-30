@@ -158,9 +158,12 @@ namespace MusicStore.Models.Module
                 {
                     if (prop.Name != "Id")
                     {
-                        columns += $"{prop.Name},";
-                        values += $"@{prop.Name},";
-                        dict.Add(prop.Name, prop.GetValue(obiekt));
+                        if (prop.GetValue(obiekt) != null)
+                        {
+                            columns += $"{prop.Name},";
+                            values += $"@{prop.Name},";
+                            dict.Add(prop.Name, prop.GetValue(obiekt));
+                        }
                     }
                 }
                 columns = columns.Remove(columns.Length - 1, 1) + ")";
@@ -171,7 +174,7 @@ namespace MusicStore.Models.Module
                 SqlCommand command = new SqlCommand(query, (SqlConnection)Connection);
                 foreach(var obj in dict)
                 {
-                    command.Parameters.AddWithValue(obj.Key, obj.Value);
+                    command.Parameters.AddWithValue("@" + obj.Key, obj.Value);
                 }
 
                 var reader = command.ExecuteReader();
@@ -209,22 +212,25 @@ namespace MusicStore.Models.Module
                 {
                     if (prop.Name != "Id")
                     {
-                        values += $"{prop.Name} = @{prop.Name},";
-                        dict.Add(prop.Name, prop.GetValue(obiekt));
+                        if (prop.GetValue(obiekt) != null)
+                        {
+                            values += $"{prop.Name}=@{prop.Name},";
+                            dict.Add(prop.Name, prop.GetValue(obiekt));
+                        }
                     }
                     else
                     {
                         ID = (int)prop.GetValue(obiekt);
                     }
                 }
-                values = values.Remove(values.Length - 1, 1) + $" WHERE Id = {ID}";
+                values = values.Remove(values.Length - 1, 1) + $" WHERE Id={ID}";
 
                 query = query + values;
 
                 SqlCommand command = new SqlCommand(query, (SqlConnection)Connection);
                 foreach (var obj in dict)
                 {
-                    command.Parameters.AddWithValue(obj.Key, obj.Value);
+                    command.Parameters.AddWithValue("@" + obj.Key, obj.Value);
                 }
 
                 command.ExecuteNonQuery();

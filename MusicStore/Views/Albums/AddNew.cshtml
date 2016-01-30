@@ -1,0 +1,25 @@
+﻿@model List<MusicStore.Models.Module.Artysta>
+@{
+    ViewBag.Title = "Select Artist";
+}
+
+<h2>Wybierz artystę</h2>
+
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th>Nazwa</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach(var artysta in Model)
+        {
+            <tr style="cursor: pointer;" onclick="location.href = '@Url.Action("NewAlbum", "Albums", artysta)'">
+                <td>
+                    @Html.Label(artysta.Nazwa)
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+

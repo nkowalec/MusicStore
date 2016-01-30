@@ -28,6 +28,10 @@ namespace MusicStore.Models.Module
                 if (artysta == null) artysta = DbModule.GetInstance().Artysci.Where(x => x.Id == ArtystaId).First();
                 return artysta;
             }
+            set
+            {
+                artysta = value;
+            }
         }
         [DBItem]
         public bool Blokada { get; set; }
@@ -50,7 +54,7 @@ namespace MusicStore.Models.Module
 
         public Album(Artysta artist)
         {
-            Id = 0;
+            Id = -1;
             State = RowState.Added;
             Blokada = false;
             this.artysta = artist;
@@ -58,5 +62,10 @@ namespace MusicStore.Models.Module
         }
 
         public Album() { }
+
+        public override string ToString()
+        {
+            return this.Nazwa;
+        }
     }
 }

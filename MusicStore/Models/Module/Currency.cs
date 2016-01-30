@@ -11,6 +11,8 @@ namespace MusicStore.Models.Module
         public static readonly string EUR = "EUR";
         public static readonly string GBP = "GBP";
         public static readonly string USD = "USD";
+
+        public static List<string> Symbols = new string[] { "PLN", "EUR", "GBP", "USD" }.ToList();
     }
 
     public struct Currency

@@ -286,6 +286,8 @@
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Albums\Index.cshtml" />
+    <Content Include="Views\Albums\AddNew.cshtml" />
+    <Content Include="Views\Albums\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
