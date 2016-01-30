@@ -6,6 +6,12 @@
     @Html.AntiForgeryToken()
 
     <ul class="nav navbar-nav navbar-right">
+        @if(MusicStore.Models.Module.User.GetCurrentRole() == MusicStore.Models.Module.User.Admin)
+        {
+            <li>
+                @Html.ActionLink("Użytkownicy", "Index", "Account")
+            </li>
+        }
         <li>
             @Html.ActionLink("Hello " + MusicStore.Models.Module.User.GetCurrentLogin() + "!", "Index", "Home", routeValues: null, htmlAttributes: new { title = "Manage" })
         </li>

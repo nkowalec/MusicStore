@@ -1,0 +1,28 @@
+﻿@model List<MusicStore.Models.Module.User>
+@{
+    ViewBag.Title = "Users";
+}
+
+<h2>Użytkownicy</h2>
+
+<button class="btn btn-lg" onclick="location.href='@Url.Action("AddNew", "Account")'">Dodaj użytkownika</button>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Użytkownik</th>
+            <th>Rola</th>
+        </tr>
+    </thead>
+    @foreach(var user in Model)
+    {
+        <tr>
+            <td>@Html.Label(user.Login)</td>
+            <td>@Html.Label(user.Rola)</td>
+            <td>
+                <button onclick="location.href='@Url.Action("Edit", "Account", new { Id = user.Id })'" class="btn btn-default">Edytuj</button>
+                <button onclick="location.href='@Url.Action("Delete", "Account", new { Id = user.Id })'" class="btn btn-danger">Usuń</button>
+            </td>
+        </tr>
+    }
+</table>

@@ -14,12 +14,16 @@ namespace MusicStore.Controllers
         // GET: Albums
         public ActionResult Index()
         {
+            if (!MusicStore.Models.Module.User.IsAuthenticated) return RedirectToAction("Index", "Home");
+            if (MusicStore.Models.Module.User.GetCurrentRole() != MusicStore.Models.Module.User.Admin) return RedirectToAction("Index", "Home");
             DbModule module = DbModule.GetInstance();
             return View(module.Albumy);
         }
 
         public RedirectToRouteResult Delete(int Id)
         {
+            if (!MusicStore.Models.Module.User.IsAuthenticated) return RedirectToAction("Index", "Home");
+            if (MusicStore.Models.Module.User.GetCurrentRole() != MusicStore.Models.Module.User.Admin) return RedirectToAction("Index", "Home");
             DbModule module = DbModule.GetInstance();
             foreach(Utwor utwor in module.Utwory.Where(x=>x.AlbumId == Id))
             {
@@ -32,11 +36,15 @@ namespace MusicStore.Controllers
 
         public ActionResult Edit(int Id)
         {
+            if (!MusicStore.Models.Module.User.IsAuthenticated) return RedirectToAction("Index", "Home");
+            if (MusicStore.Models.Module.User.GetCurrentRole() != MusicStore.Models.Module.User.Admin) return RedirectToAction("Index", "Home");
             return View(DbModule.GetInstance().Albumy.Where(x=>x.Id == Id).First());
         }
 
         public RedirectToRouteResult Save(Album album, HttpPostedFileBase obrazek = null, bool EditAfterSave = false)
         {
+            if (!MusicStore.Models.Module.User.IsAuthenticated) return RedirectToAction("Index", "Home");
+            if (MusicStore.Models.Module.User.GetCurrentRole() != MusicStore.Models.Module.User.Admin) return RedirectToAction("Index", "Home");
             DbModule module = DbModule.GetInstance();
             if(obrazek != null)
             {
@@ -57,6 +65,8 @@ namespace MusicStore.Controllers
 
         public ActionResult AddNew()
         {
+            if (!MusicStore.Models.Module.User.IsAuthenticated) return RedirectToAction("Index", "Home");
+            if (MusicStore.Models.Module.User.GetCurrentRole() != MusicStore.Models.Module.User.Admin) return RedirectToAction("Index", "Home");
             DbModule module = DbModule.GetInstance();
             
             return View(module.Artysci);
@@ -64,6 +74,8 @@ namespace MusicStore.Controllers
 
         public RedirectToRouteResult NewAlbum(Artysta artysta)
         {
+            if (!MusicStore.Models.Module.User.IsAuthenticated) return RedirectToAction("Index", "Home");
+            if (MusicStore.Models.Module.User.GetCurrentRole() != MusicStore.Models.Module.User.Admin) return RedirectToAction("Index", "Home");
             Album album = new Album(artysta);
             var dict = new Dictionary<string, object>();
             dict.Add("Id", album.Id);

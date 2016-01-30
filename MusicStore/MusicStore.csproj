@@ -276,6 +276,8 @@
     <Content Include="Views\Home\Album.cshtml" />
     <Content Include="Views\Home\Utwor.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
+    <Content Include="Views\Account\Index.cshtml" />
+    <Content Include="Views\Account\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\Zakup\" />

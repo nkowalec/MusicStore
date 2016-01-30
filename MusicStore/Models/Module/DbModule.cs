@@ -184,7 +184,7 @@ namespace MusicStore.Models.Module
             try
             {
                 Connection.Open();
-                string query = $"INSERT INTO {typ.Name} ";
+                string query = $"INSERT INTO {((DBTableAttribute)typ.GetCustomAttributes(typeof(DBTableAttribute), true).First()).TableName} ";
                 string columns = "(";
                 string values = "(";
                 var dict = new Dictionary<string, object>();
@@ -239,7 +239,7 @@ namespace MusicStore.Models.Module
             try
             {
                 Connection.Open();
-                string query = $"UPDATE {typ.Name} ";
+                string query = $"UPDATE {((DBTableAttribute)typ.GetCustomAttributes(typeof(DBTableAttribute), true).First()).TableName} ";
                 string values = "SET ";
                 int ID = 0;
                 var dict = new Dictionary<string, object>();
@@ -294,7 +294,7 @@ namespace MusicStore.Models.Module
             try
             {
                 Connection.Open();
-                string query = $"DELETE FROM {typ.Name} WHERE Id = {typ.GetProperty("Id").GetValue(obiekt)}";
+                string query = $"DELETE FROM {((DBTableAttribute)typ.GetCustomAttributes(typeof(DBTableAttribute), true).First()).TableName} WHERE Id = {typ.GetProperty("Id").GetValue(obiekt)}";
                 SqlCommand command = new SqlCommand(query, (SqlConnection)Connection);
                 command.ExecuteNonQuery();
             }

@@ -1,0 +1,23 @@
+﻿@model MusicStore.Models.Module.User
+@{
+    ViewBag.Title = "Edit";
+}
+
+<h2>Edit</h2>
+
+<form method="post" action="@Url.Action("Save", "Account", Model)" class="form-horizontal">
+    <div class="form-group">
+        <label>Login</label>
+        @Html.TextBox("Login", Model.Login, htmlAttributes: new { @class="form-control" })
+    </div>
+    <div class="form-group">
+        <label>Password</label>
+        <input type="password" name="Password" class="form-control" value="@Model.Password" />
+    </div>
+    <div class="form-group">
+        <label>Rola</label>
+        @Html.DropDownList("Rola", new SelectList(new string[] { "Klient", "Admin" }), new { @class="form-control" })
+    </div>
+
+    <button class="btn btn-default" type="submit">Zapisz</button>
+</form>

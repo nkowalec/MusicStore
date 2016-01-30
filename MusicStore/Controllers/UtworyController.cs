@@ -12,6 +12,8 @@ namespace MusicStore.Controllers
         // GET: Utwory
         public ActionResult Index(int Id)
         {
+            if (!MusicStore.Models.Module.User.IsAuthenticated) return RedirectToAction("Index", "Home");
+            if (MusicStore.Models.Module.User.GetCurrentRole() != MusicStore.Models.Module.User.Admin) return RedirectToAction("Index", "Home");
             ViewBag.AlbumId = Id;
             ViewBag.Title = DbModule.GetInstance().Albumy.Where(x => x.Id == Id).First().Nazwa;
             var utwory = DbModule.GetInstance().Utwory.Where(x => x.AlbumId == Id).ToList();
@@ -20,11 +22,15 @@ namespace MusicStore.Controllers
 
         public ActionResult Edit(int Id)
         {
+            if (!MusicStore.Models.Module.User.IsAuthenticated) return RedirectToAction("Index", "Home");
+            if (MusicStore.Models.Module.User.GetCurrentRole() != MusicStore.Models.Module.User.Admin) return RedirectToAction("Index", "Home");
             return View(DbModule.GetInstance().Utwory.Where(x => x.Id == Id).First());
         }
         public RedirectToRouteResult Save(Utwor utwor)
         {
-            if(utwor.State == RowState.Added)
+            if (!MusicStore.Models.Module.User.IsAuthenticated) return RedirectToAction("Index", "Home");
+            if (MusicStore.Models.Module.User.GetCurrentRole() != MusicStore.Models.Module.User.Admin) return RedirectToAction("Index", "Home");
+            if (utwor.State == RowState.Added)
             {
                 DbModule.GetInstance().AddRow(utwor);
                 return RedirectToAction("Edit", "Utwory", new { Id = utwor.Id });
@@ -38,6 +44,8 @@ namespace MusicStore.Controllers
 
         public RedirectToRouteResult Delete(int Id)
         {
+            if (!MusicStore.Models.Module.User.IsAuthenticated) return RedirectToAction("Index", "Home");
+            if (MusicStore.Models.Module.User.GetCurrentRole() != MusicStore.Models.Module.User.Admin) return RedirectToAction("Index", "Home");
             DbModule module = DbModule.GetInstance();
             var utwor = module.Utwory.Where(x => x.Id == Id).First();
 
@@ -48,6 +56,8 @@ namespace MusicStore.Controllers
 
         public RedirectToRouteResult AddNew(int Id)
         {
+            if (!MusicStore.Models.Module.User.IsAuthenticated) return RedirectToAction("Index", "Home");
+            if (MusicStore.Models.Module.User.GetCurrentRole() != MusicStore.Models.Module.User.Admin) return RedirectToAction("Index", "Home");
             Utwor utwor = new Utwor(DbModule.GetInstance().Albumy.Where(x => x.Id == Id).First());
             return RedirectToAction("Save", "Utwory", utwor);
         }
