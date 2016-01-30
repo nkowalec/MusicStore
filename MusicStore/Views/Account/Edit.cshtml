@@ -14,10 +14,13 @@
         <label>Password</label>
         <input type="password" name="Password" class="form-control" value="@Model.Password" />
     </div>
+    @if (MusicStore.Models.Module.User.GetCurrentRole() == MusicStore.Models.Module.User.Admin)
+    {
     <div class="form-group">
         <label>Rola</label>
-        @Html.DropDownList("Rola", new SelectList(new string[] { "Klient", "Admin" }), new { @class="form-control" })
+        @Html.DropDownList("Rola", new SelectList(new string[] { "Klient", "Admin" }), new { @class = "form-control" })
     </div>
+    }
 
     <button class="btn btn-default" type="submit">Zapisz</button>
 </form>

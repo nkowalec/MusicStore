@@ -36,23 +36,17 @@ namespace MusicStore.Controllers
 
         public ActionResult Edit(int Id)
         {
-            if (!MusicStore.Models.Module.User.IsAuthenticated) return RedirectToAction("Index", "Home");
-            if (MusicStore.Models.Module.User.GetCurrentRole() != MusicStore.Models.Module.User.Admin) return RedirectToAction("Index", "Home");
             return View(DbModule.GetInstance().Users.Where(x => x.Id == Id).First());
         }
 
         public RedirectToRouteResult AddNew()
         {
-            if (!MusicStore.Models.Module.User.IsAuthenticated) return RedirectToAction("Index", "Home");
-            if (MusicStore.Models.Module.User.GetCurrentRole() != MusicStore.Models.Module.User.Admin) return RedirectToAction("Index", "Home");
             User user = new Models.Module.User();
             return RedirectToAction("Save", "Account", user);
         }
 
         public RedirectToRouteResult Save(User user)
         {
-            if (!MusicStore.Models.Module.User.IsAuthenticated) return RedirectToAction("Index", "Home");
-            if (MusicStore.Models.Module.User.GetCurrentRole() != MusicStore.Models.Module.User.Admin) return RedirectToAction("Index", "Home");
             DbModule module = DbModule.GetInstance();
             if (user.Id > 0)
             {
