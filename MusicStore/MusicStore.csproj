@@ -195,9 +195,11 @@
     <Compile Include="App_Start\IdentityConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
+    <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AlbumsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\UtworyController.cs" />
+    <Compile Include="Controllers\ZakupController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -212,6 +214,7 @@
     <Compile Include="Models\Module\DBTableAttribute.cs" />
     <Compile Include="Models\Module\Row.cs" />
     <Compile Include="Models\Module\RowState.cs" />
+    <Compile Include="Models\Module\User.cs" />
     <Compile Include="Models\Module\Utwor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
@@ -270,8 +273,13 @@
     <Content Include="Views\Albums\Edit.cshtml" />
     <Content Include="Views\Utwory\Index.cshtml" />
     <Content Include="Views\Utwory\Edit.cshtml" />
+    <Content Include="Views\Home\Album.cshtml" />
+    <Content Include="Views\Home\Utwor.cshtml" />
+    <Content Include="Views\Account\Login.cshtml" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Views\Zakup\" />
+  </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />

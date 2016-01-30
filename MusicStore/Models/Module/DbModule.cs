@@ -24,6 +24,41 @@ namespace MusicStore.Models.Module
         private static DbModule instance = new DbModule();
         public static DbModule GetInstance() => instance;
 
+        public List<User> Users
+        {
+            get
+            {
+                List<User> users = new List<User>();
+
+                try
+                {
+                    Connection.Open();
+                    SqlCommand command = new SqlCommand("SELECT * FROM Users", (SqlConnection)Connection);
+
+                    var reader = command.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        User user = new User();
+                        user.State = RowState.Unchanged;
+                        foreach (PropertyInfo prop in typeof(User).GetProperties().Where(x => x.GetCustomAttribute(typeof(DBItemAttribute)) != null))
+                        {
+                            prop.SetValue(user, reader[prop.Name]);
+                        }
+                        users.Add(user);
+                    }
+                }
+                catch (Exception ex)
+                {
+
+                }
+                finally
+                {
+                    Connection.Close();
+                }
+
+                return users;
+            }
+        }
         public List<Utwor> Utwory
         {
             get

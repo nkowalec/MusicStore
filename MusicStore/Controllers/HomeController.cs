@@ -16,7 +16,12 @@ namespace MusicStore.Controllers
 
         public ActionResult Album(int Id)
         {
+            return View(DbModule.GetInstance().Albumy.Where(x => x.Id == Id).First());
+        }
 
+        public ActionResult Utwor(int Id)
+        {
+            return View(DbModule.GetInstance().Utwory.Where(x => x.Id == Id).First());
         }
     }
 }

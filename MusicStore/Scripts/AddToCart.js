@@ -28,3 +28,9 @@ function getCookie(cname) {
     }
     return "";
 }
+
+$(document).ready(function () {
+    $("#TekstBtn").click(function () {
+        $("#Tekst").toggle();
+    });
+});

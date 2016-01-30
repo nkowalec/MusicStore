@@ -1,0 +1,22 @@
+﻿@model MusicStore.Models.Module.Utwor
+@{
+    ViewBag.Title = Model.Tytul;
+}
+
+
+<h2>Utwor - @Html.Label(Model.Tytul)</h2>
+
+<h4>@Html.Label(Model.Wykonawca)</h4>
+
+<pre>@Model.Info </pre><br />
+<div>
+    <button id="TekstBtn" class="btn btn-default">Tekst</button>
+    <div id="Tekst" style="display: none;">
+        <pre>@Model.Tekst</pre>
+    </div>
+</div>
+
+@if (Model.YtLink != "")
+{
+    <iframe width="854" height="480" src="@Model.YtLink" frameborder="0" allowfullscreen></iframe>
+}

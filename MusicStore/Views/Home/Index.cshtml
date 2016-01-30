@@ -2,11 +2,12 @@
 @{
     ViewBag.Title = "Music Store";
 }
-<script type="text/javascript" src="@Url.Content("/Scripts/AddToCart.js")"></script>
 <table class="table table-striped">
     
         @foreach (var row in Model)
         {
+            if (!row.Blokada)
+            {
             <tr>
                 <td class="col-md-2" style="vertical-align: middle;">
                     @if (row.Image != null)
@@ -27,9 +28,10 @@
                     Dostępne: @Html.Label(row.StanIlosc.ToString()) szt.
                 </td>
                 <td style="vertical-align: middle;">
-                    <button class="btn btn-default" onclick="location.href='@Url.Action("Album", "Index", new { Id = row.Id })'">Więcej</button> 
+                    <button class="btn btn-default" onclick="location.href='@Url.Action("Album", "Home", new { Id = row.Id })'">Więcej</button> 
                     <button onclick="AddToCart(@row.Id)" class="btn btn-warning glyphicon glyphicon-align-center glyphicon-shopping-cart glyphicon-bold"></button>
                 </td>
             </tr>
+            }
         }
 </table>
