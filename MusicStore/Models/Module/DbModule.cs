@@ -166,19 +166,20 @@ namespace MusicStore.Models.Module
                         }
                     }
                 }
-                columns = columns.Remove(columns.Length - 1, 1) + ")";
+                columns = columns.Remove(columns.Length - 1, 1) + ") OUTPUT INSERTED.Id ";
                 values = values.Remove(values.Length - 1, 1) + ")";
 
-                query = query + columns + " VALUES " + values + " SELECT SCOPE_IDENTITY() AS ID";
+                query = query + columns + " VALUES " + values + ";";
 
                 SqlCommand command = new SqlCommand(query, (SqlConnection)Connection);
                 foreach(var obj in dict)
                 {
                     command.Parameters.AddWithValue("@" + obj.Key, obj.Value);
                 }
+                command.Parameters.Add("@ID", SqlDbType.Int, 0).Direction = ParameterDirection.Output;
 
-                var reader = command.ExecuteReader();
-                obiekt.Id = (int)reader["ID"];
+                if (Connection.State != ConnectionState.Open) Connection.Open();
+                obiekt.Id = (int)command.ExecuteScalar();
             }
             catch (Exception ex)
             {

@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Routing;
 
 namespace MusicStore.Controllers
 {
@@ -20,6 +21,10 @@ namespace MusicStore.Controllers
         public RedirectToRouteResult Delete(int Id)
         {
             DbModule module = DbModule.GetInstance();
+            foreach(Utwor utwor in module.Utwory.Where(x=>x.AlbumId == Id))
+            {
+                module.Delete(utwor);
+            }
             module.Delete(module.Albumy.Where(x => x.Id == Id).First());
 
             return RedirectToAction("Index", "Albums");
@@ -30,7 +35,7 @@ namespace MusicStore.Controllers
             return View(DbModule.GetInstance().Albumy.Where(x=>x.Id == Id).First());
         }
 
-        public FileContentResult Save(Album album, HttpPostedFileBase obrazek = null)
+        public RedirectToRouteResult Save(Album album, HttpPostedFileBase obrazek = null, bool EditAfterSave = false)
         {
             DbModule module = DbModule.GetInstance();
             if(obrazek != null)
@@ -40,15 +45,14 @@ namespace MusicStore.Controllers
                     obrazek.InputStream.CopyTo(stream);
                     var baseStr = Convert.ToBase64String(stream.ToArray());
                     album.Image = Convert.FromBase64String(baseStr);
-
-                    return File(album.Image, "image");
                 }
             }
             if (album.State == RowState.Added) module.AddRow(album);
              else module.Update(album);
 
-            //  return RedirectToAction("Index", "Albums");
-            return null;
+            if (EditAfterSave) return RedirectToAction("Edit", "Albums", new { Id = album.Id });
+
+            return RedirectToAction("Index", "Albums");
         }
 
         public ActionResult AddNew()
@@ -61,8 +65,12 @@ namespace MusicStore.Controllers
         public RedirectToRouteResult NewAlbum(Artysta artysta)
         {
             Album album = new Album(artysta);
-
-            return RedirectToAction("Edit", "Albums", album);
+            var dict = new Dictionary<string, object>();
+            dict.Add("Id", album.Id);
+            dict.Add("ArtystaId", album.ArtystaId);
+            dict.Add("EditAfterSave", true);
+            dict.Add("State", RowState.Added);
+            return RedirectToAction("Save", "Albums", new RouteValueDictionary(dict));
         }
     }
 }

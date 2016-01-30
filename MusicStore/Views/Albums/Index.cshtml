@@ -25,7 +25,7 @@
             <td>@Html.Label(row.StanIlosc.ToString())</td>
             <td>
             <button onclick="location.href='@Url.Action("Edit", "Albums", new { Id = row.Id })'" class="btn btn-default">Edytuj</button>
-            <button onclick="location.href='@Url.Action("Delete", "Albums", row.Id)'" class="btn btn-danger">Usuń</button></td>
+            <button onclick="location.href='@Url.Action("Delete", "Albums", new { Id = row.Id })'" class="btn btn-danger">Usuń</button></td>
         </tr>
     }
 </table>

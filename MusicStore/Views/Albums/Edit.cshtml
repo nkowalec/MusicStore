@@ -5,10 +5,12 @@
 
 <h2>Album - Edycja</h2>
 
-<form action='@Url.Action("Save", "Albums", Model)' method="post" class="form-horizontal" enctype = "multipart/form-data">
+<form action='@Url.Action("Save", "Albums")' method="post" class="form-horizontal" enctype="multipart/form-data">
+    @Html.Hidden("Id", Model.Id)
+    @Html.Hidden("ArtystaId", Model.ArtystaId)
     <div class="form-group">
         <label for="blokada">Blokada</label>
-        @Html.CheckBoxFor(m => m.Blokada, new { @class="form-control"})
+        @Html.CheckBox("Blokada", Model.Blokada, new { @class="form-control" })
     </div>
     <div class="form-group">
         <label for="Artysta">Artysta</label>
@@ -16,26 +18,27 @@
     </div>
     <div class="form-group">
         <label for="Name">Nazwa</label>
-        @Html.TextBoxFor(m => m.Nazwa, new { @class = "form-control" })
+        @Html.TextBox("Nazwa", Model.Nazwa, new { @class = "form-control" })
     </div>
     <div class="form-group">
         <label for="Stan">Stan ilościowy</label>
-        @Html.TextBoxFor(m => m.StanIlosc, new { @class = "form-control" })
+        @Html.TextBox("StanIlosc", Model.StanIlosc, new { @class = "form-control" })
     </div>
     <div class="form-group">
         <label for="cena">Cena brutto</label>
-        @Html.TextBoxFor(m => m.BruttoValue, new { @class="form-control" })
-        @Html.DropDownListFor(m => m.BruttoSymbol, new SelectList(MusicStore.Models.Module.CurrencySymbols.Symbols), new { @class = "form-control" })
+        @Html.TextBox("BruttoValue", Model.BruttoValue, new { @class = "form-control" })
+        @Html.DropDownList("BruttoSymbol", new SelectList(MusicStore.Models.Module.CurrencySymbols.Symbols), new { @class = "form-control" })
     </div>
     @if (Model.Image != null)
     {
         <img src="data:image;base64,@Convert.ToBase64String(Model.Image)"  width="100" height="100"/> 
     }
-    @Model.Image=null
     <div class="form-group">
         <input type="file" name="obrazek" />
     </div>
 
     <button type="submit" class="btn btn-success">Zapisz</button>
 </form>
+
+<button type="button" class="btn btn-default" onclick="location.href = '@Url.Action("Index", "Utwory", new { Id = Model.Id })'">Zarządzaj utworami</button>
 

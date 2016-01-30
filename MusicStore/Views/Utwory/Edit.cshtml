@@ -1,0 +1,38 @@
+﻿@model MusicStore.Models.Module.Utwor
+@{
+    ViewBag.Title = "Edytuj Utwór";
+}
+
+<h2>Edytuj Utwór</h2>
+
+<form method="post" action='@Url.Action("Save", "Utwory", Model)' class="form-horizontal">
+    @Html.Hidden("Id", Model.Id)
+    @Html.Hidden("AlbumId", Model.AlbumId)
+    
+    <div class="form-group">
+        <label for="Album">Album</label>
+        <input type="text" readonly value="@Model.Album.Nazwa" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label for="Tytul">Tytuł</label>
+        @Html.TextBox("Tytul", Model.Tytul, new { @class="form-control" })
+    </div>
+    <div class="form-group">
+        <label for="Wykonawca">Wykonawca</label>
+        @Html.TextBox("Wykonawca", Model.Wykonawca, new { @class = "form-control" })
+    </div>
+    <div class="form-group">
+        <label for="info">Info</label>
+        @Html.TextArea("Info", Model.Info, new { @class = "form-control" })
+    </div>
+    <div class="form-group">
+        <label for="Tekst">Tekst</label>
+        @Html.TextArea("Tekst", Model.Tekst, new { @class = "form-control" })
+    </div>
+    <div class="form-group">
+        <label for="YtLink">Link YouTube</label>
+        @Html.TextBox("YtLink", Model.YtLink, new { @class = "form-control" })
+    </div>
+
+    <button type="submit" class="btn btn-success">Zapisz</button>
+</form>
