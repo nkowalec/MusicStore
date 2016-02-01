@@ -1,0 +1,54 @@
+﻿@model System.Collections.Generic.Dictionary<MusicStore.Models.Module.Album, int>
+@{
+    ViewBag.Title = "Koszyk";
+}
+
+<h2>Koszyk</h2>
+
+@if (Model.Count == 0)
+{
+    <h3>Twój koszyk jest pusty</h3>
+}
+else
+{
+    <table class="table table-striped">
+        @foreach (var row in Model)
+        {
+            <tr>
+                <td class="col-md-2" style="vertical-align: middle;">
+                    @if (row.Key.Image != null)
+                    {
+                        <img src="data:image;base64,@Convert.ToBase64String(row.Key.Image)" width="100" height="100" />
+                    }
+                    else
+                    {
+                        <img src="~/Content/default.jpg" height="100" width="100" />
+                    }
+                </td>
+                <td style="vertical-align: middle;">
+                    <h2>@Html.Label(row.Key.Nazwa)</h2>
+                    <h4>@Html.Label(row.Key.Artysta.Nazwa)</h4>
+                </td>
+               <td style="vertical-align: middle;">
+                    Cena: @Html.Label(row.Key.BruttoValue.ToString()) @Html.Label(row.Key.BruttoSymbol)<br />
+                <!--    Dostępne: @Html.Label(row.Key.StanIlosc.ToString()) szt. -->
+                </td>
+            <!--    <td style="vertical-align: middle;">
+                    <button class="btn btn-default" onclick="location.href='@Url.Action("Album", "Home", new { Id = row.Key.Id })'">Więcej</button>
+                    <button onclick="AddToCart(@row.Key.Id)" class="btn btn-warning glyphicon glyphicon-align-center glyphicon-shopping-cart glyphicon-bold"></button>
+                </td -->
+                <td style="vertical-align: middle;">
+                    Ilość: @Html.Label(row.Value.ToString()) szt. 
+                </td>
+                <td>
+                    <button class="btn btn-danger glyphicon glyphicon-remove" onclick="removeKoszykAction(@row.Key.Id)"></button>
+                </td>
+            </tr>
+        }
+    </table>
+}
+<br /><br />
+Suma: @ViewBag.wartosc @ViewBag.waluta
+
+<br /><br />
+<button class="btn btn-danger" onclick='setCookie("Cart", "", 1)'>Opróżnij koszyk</button>

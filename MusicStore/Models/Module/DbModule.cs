@@ -183,8 +183,10 @@ namespace MusicStore.Models.Module
 
             try
             {
+                string tableName = ((DBTableAttribute)typ.GetCustomAttributes(typeof(DBTableAttribute), true).First()).TableName;
+                if (String.IsNullOrEmpty(tableName)) tableName = typ.Name;
                 Connection.Open();
-                string query = $"INSERT INTO {((DBTableAttribute)typ.GetCustomAttributes(typeof(DBTableAttribute), true).First()).TableName} ";
+                string query = $"INSERT INTO {tableName} ";
                 string columns = "(";
                 string values = "(";
                 var dict = new Dictionary<string, object>();
@@ -238,8 +240,10 @@ namespace MusicStore.Models.Module
 
             try
             {
+                string tableName = ((DBTableAttribute)typ.GetCustomAttributes(typeof(DBTableAttribute), true).First()).TableName;
+                if (String.IsNullOrEmpty(tableName)) tableName = typ.Name;
                 Connection.Open();
-                string query = $"UPDATE {((DBTableAttribute)typ.GetCustomAttributes(typeof(DBTableAttribute), true).First()).TableName} ";
+                string query = $"UPDATE {tableName} ";
                 string values = "SET ";
                 int ID = 0;
                 var dict = new Dictionary<string, object>();
@@ -293,8 +297,10 @@ namespace MusicStore.Models.Module
 
             try
             {
+                string tableName = ((DBTableAttribute)typ.GetCustomAttributes(typeof(DBTableAttribute), true).First()).TableName;
+                if (String.IsNullOrEmpty(tableName)) tableName = typ.Name;
                 Connection.Open();
-                string query = $"DELETE FROM {((DBTableAttribute)typ.GetCustomAttributes(typeof(DBTableAttribute), true).First()).TableName} WHERE Id = {typ.GetProperty("Id").GetValue(obiekt)}";
+                string query = $"DELETE FROM {tableName} WHERE Id = {typ.GetProperty("Id").GetValue(obiekt)}";
                 SqlCommand command = new SqlCommand(query, (SqlConnection)Connection);
                 command.ExecuteNonQuery();
             }

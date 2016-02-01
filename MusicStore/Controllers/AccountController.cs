@@ -50,7 +50,13 @@ namespace MusicStore.Controllers
             DbModule module = DbModule.GetInstance();
             if (user.Id > 0)
             {
-                module.Update(user);
+                if (module.Users.Where(x => x.Login == user.Login).ToList().Count > 0)
+                {
+                    module.Delete(user);
+                    return RedirectToAction("Index");
+                }
+                else
+                    module.Update(user);
             }
             else
             {
@@ -67,6 +73,7 @@ namespace MusicStore.Controllers
             {
                 Session["LoginRole"] = rola;
                 Session["Login"] = Login;
+                Session["LoginId"] = MusicStore.Models.Module.DbModule.GetInstance().Users.Where(x => x.Login == Login).First().Id;
 
                 return RedirectToAction("Index", "Home");
             }
@@ -77,6 +84,7 @@ namespace MusicStore.Controllers
         {
             Session["LoginRole"] = null;
             Session["Login"] = null;
+            Session["LoginId"] = null;
 
             return RedirectToAction("Index", "Home");
         }

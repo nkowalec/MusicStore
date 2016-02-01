@@ -53,5 +53,11 @@ namespace MusicStore.Models.Module
             var session = HttpContext.Current.Session;
             return session["LoginRole"]?.ToString();
         }
+
+        public static int GetCurrentId()
+        {
+            var session = HttpContext.Current.Session;
+            return (int)session["LoginId"];
+        }
     }
 }
