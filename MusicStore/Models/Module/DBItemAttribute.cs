@@ -3,7 +3,7 @@ using System.Runtime.CompilerServices;
 
 namespace MusicStore.Models.Module
 {
-    [AttributeUsage(AttributeTargets.Property, AllowMultiple =false)]
+    [AttributeUsage(AttributeTargets.Property|AttributeTargets.Field, AllowMultiple =false)]
     internal class DBItemAttribute : Attribute
     {
         public string ItemName { get; set; }

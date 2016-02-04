@@ -95,6 +95,78 @@ namespace MusicStore.Models.Module
             }
         }
 
+        public List<PozycjaDokumentu> PozycjeDokumentow
+        {
+            get
+            {
+                List<PozycjaDokumentu> pozycje = new List<PozycjaDokumentu>();
+
+                try
+                {
+                    Connection.Open();
+                    SqlCommand command = new SqlCommand("SELECT * FROM PozycjaDokumentu", (SqlConnection)Connection);
+
+                    var reader = command.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        PozycjaDokumentu pozycja = new PozycjaDokumentu();
+                        pozycja.State = RowState.Unchanged;
+                        foreach (PropertyInfo prop in typeof(PozycjaDokumentu).GetProperties().Where(x => x.GetCustomAttribute(typeof(DBItemAttribute)) != null))
+                        {
+                            prop.SetValue(pozycja, reader[prop.Name]);
+                        }
+                        pozycje.Add(pozycja);
+                    }
+                }
+                catch (Exception ex)
+                {
+
+                }
+                finally
+                {
+                    Connection.Close();
+                }
+
+                return pozycje;
+            }
+        }
+
+        public List<Dokument> Dokumenty
+        {
+            get
+            {
+                List<Dokument> dokumenty = new List<Dokument>();
+
+                try
+                {
+                    Connection.Open();
+                    SqlCommand command = new SqlCommand("SELECT * FROM Dokument", (SqlConnection)Connection);
+
+                    var reader = command.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        Dokument dokument = new Dokument();
+                        dokument.State = RowState.Unchanged;
+                        foreach (PropertyInfo prop in typeof(Dokument).GetProperties().Where(x => x.GetCustomAttribute(typeof(DBItemAttribute)) != null))
+                        {
+                            prop.SetValue(dokument, reader[prop.Name]);
+                        }
+                        dokumenty.Add(dokument);
+                    }
+                }
+                catch (Exception ex)
+                {
+
+                }
+                finally
+                {
+                    Connection.Close();
+                }
+
+                return dokumenty;
+            }
+        }
+
         public List<Artysta> Artysci
         {
             get
