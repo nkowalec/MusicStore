@@ -1,12 +1,6 @@
 ﻿@model MusicStore.Models.Module.Dokument
 @{
-    try {
-        ViewBag.Title = "Nowe zamówienie";
-    }
-    catch
-    {
-
-    }
+     ViewBag.Title = "Nowe zamówienie";
 }
 
 <h2>Zamówienie - Dane adresowe</h2>
@@ -22,7 +16,7 @@
     </div>
     <div class="form-group">
         <label>Kod pocztowy</label>
-        @Html.TextBox("KodPocztowy", Model.KodPocztowy, htmlAttributes: new { @class = "form-control" })
+        @Html.TextBox("KodPocztowy", Model.KodPocztowy, htmlAttributes: new { @class = "form-control", @onblur = "validatePostCode('KodPocztowy')" })
     </div>
     <div class="form-group">
         <label>Miasto</label>
@@ -30,11 +24,11 @@
     </div>
     <div class="form-group">
         <label>EMAIL</label>
-        @Html.TextBox("EMAIL", Model.EMAIL, htmlAttributes: new { @class = "form-control" })
+        @Html.TextBox("EMAIL", Model.EMAIL, htmlAttributes: new { @class = "form-control", @onblur="validateEmail('EMAIL')" })
     </div>
     <div class="form-group">
         <label>Telefon</label>
-        @Html.TextBox("Telefon", Model.Telefon, htmlAttributes: new { @class = "form-control" })
+        @Html.TextBox("Telefon", Model.Telefon, htmlAttributes: new { @class = "form-control", @onblur = "validatePhone('Telefon')" })
     </div>
     @Html.Hidden("StanDokumentu", Model.StanDokumentu)
 

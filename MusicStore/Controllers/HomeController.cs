@@ -11,7 +11,7 @@ namespace MusicStore.Controllers
     {
         public ActionResult Index()
         {
-            return View(DbModule.GetInstance().Albumy);
+            return View(DbModule.GetInstance().Albumy.Where(x => (!x.Blokada && x.StanIlosc > 0)).ToList());
         }
 
         public ActionResult Album(int Id)
@@ -22,6 +22,11 @@ namespace MusicStore.Controllers
         public ActionResult Utwor(int Id)
         {
             return View(DbModule.GetInstance().Utwory.Where(x => x.Id == Id).First());
+        }
+
+        public ActionResult Contact()
+        {
+            return View();
         }
     }
 }

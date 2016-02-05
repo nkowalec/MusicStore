@@ -1,0 +1,19 @@
+﻿@model MusicStore.Models.Module.Artysta
+@{
+    ViewBag.Title = "Edit";
+}
+
+<h2>Edit - Artysta</h2>
+
+<form method="post" action="@Url.Action("Save", "Artist", Model)" class="form-horizontal">
+    <div class="form-group">
+        <label>Nazwa</label>
+        @Html.TextBox("Nazwa", Model.Nazwa, new { @class="form-control" })
+    </div>
+    <div class="form-group">
+        <label>Opis</label>
+        @Html.TextBox("Opis", Model.Opis, new { @class = "form-control" })
+    </div>
+
+    <button type="submit" class="btn btn-lg">Zapisz</button>
+</form>

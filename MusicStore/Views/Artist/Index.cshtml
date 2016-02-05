@@ -1,0 +1,25 @@
+﻿@model List<MusicStore.Models.Module.Artysta>
+@{
+    ViewBag.Title = "Artyści";
+}
+
+<h2>Artyści</h2>
+
+<button class="btn btn-success" onclick="location.href='@Url.Action("AddNew", "Artist")'">Dodaj artystę</button>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            
+        </tr>
+    </thead>
+    @foreach (var row in Model)
+    {
+        <tr>
+            <td>@row.Nazwa</td>
+            <td>
+                <button class="btn btn-danger" onclick="location.href='@Url.Action("Edit", "Artist", row)'">Edytuj</button>
+            </td>
+        </tr>
+    }
+</table>
+

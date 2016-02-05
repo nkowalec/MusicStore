@@ -197,6 +197,7 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AlbumsController.cs" />
+    <Compile Include="Controllers\ArtistController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\UtworyController.cs" />
     <Compile Include="Controllers\ZakupController.cs" />
@@ -284,6 +285,12 @@
     <Content Include="Views\Zakup\NewOrder.cshtml" />
     <Content Include="Views\Zakup\Podsumowanie.cshtml" />
     <Content Include="Views\Zakup\SaveOrder.cshtml" />
+    <Content Include="Views\Zakup\Orders.cshtml" />
+    <Content Include="Views\Zakup\PrintOrder.cshtml" />
+    <Content Include="Views\Zakup\PrintFV.cshtml" />
+    <Content Include="Views\Home\Contact.cshtml" />
+    <Content Include="Views\Artist\Index.cshtml" />
+    <Content Include="Views\Artist\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

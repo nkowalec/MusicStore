@@ -30,6 +30,12 @@
                     {
                     <li><a href="/Zakup" id="koszykBtn">Koszyk (0)</a></li>
                     }
+                    @if (MusicStore.Models.Module.User.GetCurrentRole() == MusicStore.Models.Module.User.Klient || MusicStore.Models.Module.User.GetCurrentRole() == MusicStore.Models.Module.User.Admin)
+                    {
+                    <li>
+                        @Html.ActionLink("Zamówienia", "Orders", "Zakup")
+                    </li>
+                    }
                 </ul>
                 @Html.Partial("_LoginPartial")
             </div>

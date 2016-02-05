@@ -1,0 +1,67 @@
+﻿@model MusicStore.Models.Module.Dokument
+@{
+    ViewBag.Title = "PrintFV";
+}
+
+<h2>Zamówienie @Model.NumerDokumentu</h2>
+
+<div style="float: left" ;>
+    Sprzedawca:<br />
+    Nazwa: MusicStore Demo Firma<br />
+    Adres: ul. Testowa 1, 11-111 Test<br />
+    NIP: 111-111-11-11
+</div>
+<div style="text-align:right;">
+    Odbiorca:<br />
+    Nazwa: @Model.KontrahentNazwa <br />
+    Adres: @Model.UlicaNumer, @Model.KodPocztowy @Model.Miasto <br />
+    EMAIL: @Model.EMAIL <br />
+    Tel. @Model.Telefon
+</div>
+
+
+<div style="margin-top: 30px;">
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <td>Lp.</td>
+                <td>Nazwa</td>
+                <td>Ilość</td>
+                <td>JM.</td>
+                <td>Cena Brutto</td>
+                <td>Wartość Brutto</td>
+                <td>Stawka VAT</td>
+            </tr>
+        </thead>
+        @foreach (var poz in Model.PozycjeDokumentu)
+        {
+            <tr>
+                <td>@poz.Id</td>
+                <td>@poz.AlbumName</td>
+                <td>@poz.Ilosc</td>
+                <td>@poz.Jednostka</td>
+                <td>@poz.CenaBrutto @poz.Waluta</td>
+                <td>@poz.Wartosc() @poz.Waluta</td>
+                <td>23%</td>
+            </tr>
+        }
+    </table>
+</div>
+<div style="text-align: right;">
+    Wartość całkowita:
+    @if (Model.Waluta.Length > 3)
+    {
+        @Model.Waluta;
+    }
+    else
+    {
+        @Model.Wartosc @Model.Waluta
+    }
+</div>
+
+
+<script>
+    print();
+    location.href = '@Url.Action("Orders", "Zakup")';
+</script>
+

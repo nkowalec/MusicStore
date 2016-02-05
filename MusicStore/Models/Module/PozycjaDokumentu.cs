@@ -29,7 +29,7 @@ namespace MusicStore.Models.Module
         [DBItem]
         public string Waluta { get; set; } = "PLN";
         [DBItem]
-        public string Jednostka { get; } = "szt";
+        public string Jednostka { get; set; } = "szt";
 
         public PozycjaDokumentu()
         {
@@ -41,6 +41,11 @@ namespace MusicStore.Models.Module
         {
             DokumentId = dokument.Id;
             State = RowState.Added;
+        }
+
+        public decimal Wartosc()
+        {
+            return Ilosc * CenaBrutto;
         }
     }
 

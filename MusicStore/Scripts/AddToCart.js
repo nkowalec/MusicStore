@@ -53,6 +53,39 @@ function removeKoszykAction(Id) {
     location.reload();
 }
 
+function validateEmail(elementId) {
+    var re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    var email = document.getElementById(elementId);
+
+    var result = re.test(email.value);
+    if (result == false) email.style.backgroundColor = "red";
+    else email.style.backgroundColor = "lightgreen";
+
+    return result;
+}
+
+function validatePhone(elementId) {
+    var re = /^([0-9\+]{8,13})|(\d+([-| ])\d+([-| ])\d+)$/;
+    var tel = document.getElementById(elementId);
+
+    var result = re.test(tel.value);
+    if (result == false) tel.style.backgroundColor = "red";
+    else tel.style.backgroundColor = "lightgreen";
+
+    return result;
+}
+
+function validatePostCode(elementId) {
+    var re = /^\d{2}-\d{3}$/;
+    var tel = document.getElementById(elementId);
+
+    var result = re.test(tel.value);
+    if (result == false) tel.style.backgroundColor = "red";
+    else tel.style.backgroundColor = "lightgreen";
+
+    return result;
+}
+
 $(document).ready(function () {
     $("#TekstBtn").click(function () {
         $("#Tekst").toggle();

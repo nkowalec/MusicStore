@@ -1,0 +1,37 @@
+﻿@model System.Collections.Generic.List<MusicStore.Models.Module.Dokument>
+@{
+    ViewBag.Title = "Zamówienia";
+}
+
+<h2>Zamówienia</h2>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <td>Data</td>
+            <td>Numer</td>
+            <td>Wartość</td>
+        </tr>
+    </thead>
+    @foreach(var dok in Model)
+    {
+        <tr>
+            <td>@Html.Label(dok.DataZamowienia.ToShortDateString())</td>
+            <td>@Html.Label(dok.NumerDokumentu)</td>
+            <td>
+                @if(dok.Waluta.Length > 3)
+                {
+                    @Html.Label(dok.Waluta)
+                }
+                else
+                {
+                    @Html.Label(dok.Wartosc.ToString() + " " + dok.Waluta)
+                }
+            </td>
+            <td>
+                <button class="btn btn-default" onclick="location.href='@Url.Action("PrintOrder", "Zakup", new { Id = dok.Id })'">Potwierdzenie zamówienia</button> 
+                <button class="btn btn-default" onclick="location.href='@Url.Action("PrintFV", "Zakup", new { Id = dok.Id })'">Faktura</button> 
+            </td>
+        </tr>
+    }
+</table>

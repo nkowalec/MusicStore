@@ -70,6 +70,39 @@ namespace MusicStore.Models.Module
             }
         }
 
+        public decimal Wartosc
+        {
+            get
+            {
+                decimal wart = 0;
+                foreach(var poz in PozycjeDokumentu)
+                {
+                    wart += poz.CenaBrutto * poz.Ilosc;
+                }
+                return wart;
+            }
+        }
+
+        public string Waluta
+        {
+            get
+            {
+                string waluta = "";
+                foreach (var poz in PozycjeDokumentu)
+                {
+                    if (waluta == "")
+                    {
+                        waluta = poz.Waluta;
+                    }
+                    else if(waluta != poz.Waluta)
+                    {
+                        waluta = "(Wiele walut)";
+                    }
+                }
+                return waluta;
+            }
+        }
+
         internal static string GetLastNumber()
         {
             var Context = HttpContext.Current;

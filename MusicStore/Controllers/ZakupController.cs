@@ -171,10 +171,41 @@ namespace MusicStore.Controllers
                 pozycja.Waluta = poz.Key.BruttoSymbol;
 
                 module.AddRow(pozycja);
+
+                var album = poz.Key;
+                album.StanIlosc -= pozycja.Ilosc;
+                module.Update(album);
                 lp++;
             }
             ViewBag.NumerDokumentu = dok.NumerDokumentu;
             return View();
+        }
+
+        public ActionResult Orders()
+        {
+            if (!MusicStore.Models.Module.User.IsAuthenticated) return RedirectToAction("Index", "Home");
+            var userId = MusicStore.Models.Module.User.GetCurrentId();
+            DbModule module = DbModule.GetInstance();
+            List<Dokument> doks = null;
+            if(MusicStore.Models.Module.User.GetCurrentRole() == MusicStore.Models.Module.User.Klient)
+                doks = module.Dokumenty.Where(x => x.NumerDokumentu.Split('/')[1] == userId.ToString()).ToList();
+            else if(MusicStore.Models.Module.User.GetCurrentRole() == MusicStore.Models.Module.User.Admin)
+            {
+                doks = module.Dokumenty.ToList();
+            }
+            return View(doks);
+        }
+
+        public ActionResult PrintOrder(int Id)
+        {
+            if (!MusicStore.Models.Module.User.IsAuthenticated) return RedirectToAction("Index", "Home");
+            return View(DbModule.GetInstance().Dokumenty.Where(x => x.Id == Id).First());
+        }
+
+        public ActionResult PrintFV(int Id)
+        {
+            if (!MusicStore.Models.Module.User.IsAuthenticated) return RedirectToAction("Index", "Home");
+            return View(DbModule.GetInstance().Dokumenty.Where(x => x.Id == Id).First());
         }
     }
 }

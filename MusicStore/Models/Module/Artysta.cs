@@ -29,7 +29,7 @@ namespace MusicStore.Models.Module
         }
         public Artysta()
         {
-            State = RowState.Added;
+            State = RowState.Unchanged;
             Id = 0;
         }
 
