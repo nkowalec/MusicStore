@@ -46,7 +46,7 @@ function removeKoszykAction(Id) {
     cookie = cookie.replace(reg, "");
     cookie = cookie.replace(/,+/g, ",");
     cookie = cookie.replace(/^,+/g, "");
-    cookie = cookie.replace(/$,+/g, "");
+    cookie = cookie.replace(/,+$/g, "");
 
     setCookie("Cart", cookie, 1);
 
