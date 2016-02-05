@@ -29,10 +29,10 @@
     <label>Telefon</label>
     @Html.Label("Telefon", Model.Telefon, htmlAttributes: new { @class = "form-control" })
 </div>
-@Html.Hidden("StanDokumentu", Model.StanDokumentu);
+@Html.Hidden("StanDokumentu", Model.StanDokumentu)
 
 <br /><br />
-
+<h3>Pozycje:</h3>
 <table class="table table-striped">
     @foreach (var row in (System.Collections.Generic.Dictionary<MusicStore.Models.Module.Album, int>)ViewBag.Pozycje)
     {

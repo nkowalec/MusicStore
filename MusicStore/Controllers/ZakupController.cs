@@ -57,7 +57,7 @@ namespace MusicStore.Controllers
 
         public ActionResult NewOrder()
         {
-            if (!MusicStore.Models.Module.User.IsAuthenticated) return RedirectToAction("Index", "Home");
+            if (!MusicStore.Models.Module.User.IsAuthenticated) return RedirectToAction("Login", "Account");
             if (MusicStore.Models.Module.User.GetCurrentRole() != MusicStore.Models.Module.User.Klient) return RedirectToAction("Index", "Home");
             Dokument dok = new Dokument();
             dok.StanDokumentu = StanDokumentu.Bufor;
@@ -173,8 +173,8 @@ namespace MusicStore.Controllers
                 module.AddRow(pozycja);
                 lp++;
             }
-
-            return View(dok.NumerDokumentu);
+            ViewBag.NumerDokumentu = dok.NumerDokumentu;
+            return View();
         }
     }
 }

@@ -5,6 +5,7 @@ using System.Web;
 
 namespace MusicStore.Models.Module
 {
+    [DBTable]
     public class Dokument : Row
     {
         public Dokument()
@@ -32,7 +33,7 @@ namespace MusicStore.Models.Module
         private StanDokumentu stan;
         private int stanInt;
         [DBItem]
-        public int stanDokumentu
+        public int stanDokumentuInt
         {
             get
             {
@@ -53,7 +54,7 @@ namespace MusicStore.Models.Module
             set
             {
                 stan = value;
-                stanDokumentu = (int)value;
+                stanDokumentuInt = (int)value;
             }
         }
         [DBItem]
