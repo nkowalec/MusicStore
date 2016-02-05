@@ -1,0 +1,67 @@
+﻿@model MusicStore.Models.Module.Dokument
+@{
+    ViewBag.Title = "Podsumowanie";
+}
+
+<h2>Podsumowanie</h2>
+
+<div class="form-group">
+    <label>Nazwa</label>
+    @Html.Label("KontrahentNazwa", Model.KontrahentNazwa, htmlAttributes: new { @class = "form-control" })
+</div>
+<div class="form-group">
+    <label>Ulica i numer</label>
+    @Html.Label("UlicaNumer", Model.UlicaNumer, htmlAttributes: new { @class = "form-control" })
+</div>
+<div class="form-group">
+    <label>Kod pocztowy</label>
+    @Html.Label("KodPocztowy", Model.KodPocztowy, htmlAttributes: new { @class = "form-control" })
+</div>
+<div class="form-group">
+    <label>Miasto</label>
+    @Html.Label("Miasto", Model.Miasto, htmlAttributes: new { @class = "form-control" })
+</div>
+<div class="form-group">
+    <label>EMAIL</label>
+    @Html.Label("EMAIL", Model.EMAIL, htmlAttributes: new { @class = "form-control" })
+</div>
+<div class="form-group">
+    <label>Telefon</label>
+    @Html.Label("Telefon", Model.Telefon, htmlAttributes: new { @class = "form-control" })
+</div>
+@Html.Hidden("StanDokumentu", Model.StanDokumentu);
+
+<br /><br />
+
+<table class="table table-striped">
+    @foreach (var row in (System.Collections.Generic.Dictionary<MusicStore.Models.Module.Album, int>)ViewBag.Pozycje)
+    {
+        <tr>
+            <td class="col-md-2" style="vertical-align: middle;">
+                @if (row.Key.Image != null)
+                {
+                    <img src="data:image;base64,@Convert.ToBase64String(row.Key.Image)" width="100" height="100" />
+                }
+                else
+                {
+                    <img src="~/Content/default.jpg" height="100" width="100" />
+                }
+            </td>
+            <td style="vertical-align: middle;">
+                <h2>@Html.Label(row.Key.Nazwa)</h2>
+                <h4>@Html.Label(row.Key.Artysta.Nazwa)</h4>
+            </td>
+            <td style="vertical-align: middle;">
+                Cena: @Html.Label(row.Key.BruttoValue.ToString()) @Html.Label(row.Key.BruttoSymbol)<br />
+            </td>
+            <td style="vertical-align: middle;">
+                Ilość: @Html.Label(row.Value.ToString()) szt.
+            </td>
+        </tr>
+    }
+</table>
+<br /><br />
+Suma: @ViewBag.wartosc @ViewBag.waluta
+<br /><br />
+
+<button class="btn btn-success" onclick="location.href='@Url.Action("SaveOrder", "Zakup", Model)'">Zamów</button>

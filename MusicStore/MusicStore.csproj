@@ -281,6 +281,9 @@
     <Content Include="Views\Account\Index.cshtml" />
     <Content Include="Views\Account\Edit.cshtml" />
     <Content Include="Views\Zakup\Index.cshtml" />
+    <Content Include="Views\Zakup\NewOrder.cshtml" />
+    <Content Include="Views\Zakup\Podsumowanie.cshtml" />
+    <Content Include="Views\Zakup\SaveOrder.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

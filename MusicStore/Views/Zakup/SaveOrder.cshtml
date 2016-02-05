@@ -1,0 +1,14 @@
+﻿@model System.String
+@{
+    ViewBag.Title = "Złożono zamówienie";
+}
+<script>
+    setCookie("Cart", "");
+</script>
+
+<h2>Zamówienie</h2>
+
+<h3>Gratuluję!</h3>
+<h4>Właśnie złożyłeś zamówienie numer: @Model</h4>
+
+<button class="btn btn-default" onclick="location.href = '@Url.Action("Index", "Home")'">Przejdź do strony głównej</button>

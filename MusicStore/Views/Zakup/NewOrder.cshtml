@@ -1,0 +1,42 @@
+﻿@model MusicStore.Models.Module.Dokument
+@{
+    try {
+        ViewBag.Title = "Nowe zamówienie";
+    }
+    catch
+    {
+
+    }
+}
+
+<h2>Zamówienie - Dane adresowe</h2>
+
+<form method="post" action="@Url.Action("Podsumowanie", "Zakup", Model)" class="form-horizontal">
+    <div class="form-group">
+        <label>Nazwa</label>
+        @Html.TextBox("KontrahentNazwa", Model.KontrahentNazwa, htmlAttributes: new { @class="form-control" })
+    </div>
+    <div class="form-group">
+        <label>Ulica i numer</label>
+        @Html.TextBox("UlicaNumer", Model.UlicaNumer, htmlAttributes: new { @class = "form-control" })
+    </div>
+    <div class="form-group">
+        <label>Kod pocztowy</label>
+        @Html.TextBox("KodPocztowy", Model.KodPocztowy, htmlAttributes: new { @class = "form-control" })
+    </div>
+    <div class="form-group">
+        <label>Miasto</label>
+        @Html.TextBox("Miasto", Model.Miasto, htmlAttributes: new { @class = "form-control" })
+    </div>
+    <div class="form-group">
+        <label>EMAIL</label>
+        @Html.TextBox("EMAIL", Model.EMAIL, htmlAttributes: new { @class = "form-control" })
+    </div>
+    <div class="form-group">
+        <label>Telefon</label>
+        @Html.TextBox("Telefon", Model.Telefon, htmlAttributes: new { @class = "form-control" })
+    </div>
+    @Html.Hidden("StanDokumentu", Model.StanDokumentu);
+
+    <button class="btn btn-lg" type="submit">Podsumowanie</button>
+</form>
